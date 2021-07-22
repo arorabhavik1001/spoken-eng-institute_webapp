@@ -36,6 +36,7 @@ import s3 from "../images/s3.png";
 import { db } from "../firebase";
 import axios from "axios";
 import Modal from "react-modal";
+import emailjs from "emailjs-com";
 
 const stylesByBhavik = {
   content: {
@@ -89,36 +90,46 @@ class Home extends React.Component {
       isMesModalOpen: false,
     };
   }
-  book = () => {
-    const { name, number, age, radio, mail } = this.state;
-    const details = {
-      name,
-      number,
-      age,
-      radio,
-      mail,
-    };
-    axios({
-      method: "POST",
-      url: "http://65.1.42.205:5000/api/trial",
-      headers: { "Content-Type": "application/json" },
-      data: details,
-    })
-      .then((result) => {
-        this.setState({
-          trialName: result.data.name,
-          isModalOpen: true,
-          name: "",
-          number: "",
-          age: 0,
-          radio: "",
-          mail: "",
-        });
+  book = (event) => {
+    event.preventDefault();
+    this.setState({
+      trialName: event.target.name.value,
+    });
+    db.collection("trialClasses")
+      .add({
+        name: event.target.name.value,
+        number: event.target.number.value,
+        age: event.target.age.value,
+        email: event.target.email.value,
+        course: event.target.course.value,
+        time: new Date(),
       })
-      .catch((err) => {
-        alert(`There was some problem. Pls try again later`);
-        console.log(err);
-      });
+      .then((result) => this.setState({ isModalOpen: true }))
+      .catch((err) => alert(err.message));
+
+    this.sendEmail(event);
+
+    document.getElementById("newForm").reset();
+  };
+
+  sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_sdet5ho",
+        "template_8uz59hw",
+        e.target,
+        "user_LtpiPM3ciXGrC7RB5T795"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   };
 
   handleClick = (nr) => () => {
@@ -178,40 +189,10 @@ class Home extends React.Component {
     });
   };
   regiMon = (event) => {
-    // const { name, number, mail, grade, evental } = this.state;
-    // const detailwa = {
-    //   name,
-    //   number,
-    //   mail,
-    //   grade,
-    //   evental,
-    // };
-    // axios({
-    //   method: "POST",
-    //   url: "http://65.1.42.205:4605/api/event",
-    //   headers: { "Content-Type": "application/json" },
-    //   data: detailwa,
-    // })
-    //   .then((result) => {
-    //     this.setState({
-    //       isMonModalOpen: false,
-    //       isMesModalOpen: true,
-    //       name: "",
-    //       number: "",
-    //       mail: "",
-    //       grade: "",
-    //       trialName: result.data.name,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     alert(`There was some problem, please try again later.`);
-    //     this.setState({ isMesModalOpen: true });
-    //   });
     event.preventDefault();
     this.setState({
-        trialName: event.target.name.value
-    })
+      trialName: event.target.name.value,
+    });
     db.collection("monthlyComps")
       .add({
         name: event.target.name.value,
@@ -220,45 +201,18 @@ class Home extends React.Component {
         email: event.target.mail.value,
         time: new Date(),
       })
-      .then((result) => this.setState({isMonModalOpen: false, isMesModalOpen: true,}))
+      .then((result) =>
+        this.setState({ isMonModalOpen: false, isMesModalOpen: true })
+      )
       .catch((err) => alert(err.message));
 
     document.getElementById("monForm").reset();
   };
   regiSto = (event) => {
-    // const { name, number, mail, grade, evental } = this.state;
-    // const detailwa = {
-    //   name,
-    //   number,
-    //   mail,
-    //   grade,
-    //   evental,
-    // };
-    // axios({
-    //   method: "POST",
-    //   url: "http://65.1.42.205:4605/api/event",
-    //   headers: { "Content-Type": "application/json" },
-    //   data: detailwa,
-    // })
-    //   .then((result) => {
-    //     this.setState({
-    //       isStoModalOpen: false,
-    //       isMesModalOpen: true,
-    //       name: "",
-    //       number: "",
-    //       mail: "",
-    //       grade: "",
-    //       trialName: result.data.name,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     alert(`There was some problem, please try again later.`);
-    //   });
     event.preventDefault();
     this.setState({
-        trialName: event.target.name.value
-    })
+      trialName: event.target.name.value,
+    });
     db.collection("storyTelling")
       .add({
         name: event.target.name.value,
@@ -267,45 +221,18 @@ class Home extends React.Component {
         email: event.target.mail.value,
         time: new Date(),
       })
-      .then((result) => this.setState({isStoModalOpen: false, isMesModalOpen: true,}))
+      .then((result) =>
+        this.setState({ isStoModalOpen: false, isMesModalOpen: true })
+      )
       .catch((err) => alert(err.message));
 
     document.getElementById("stoForm").reset();
   };
   regiPhoni = (event) => {
-    // const { name, number, mail, grade, evental } = this.state;
-    // const detailwa = {
-    //   name,
-    //   number,
-    //   mail,
-    //   grade,
-    //   evental,
-    // };
-    // axios({
-    //   method: "POST",
-    //   url: "http://65.1.42.205:4605/api/event",
-    //   headers: { "Content-Type": "application/json" },
-    //   data: detailwa,
-    // })
-    //   .then((result) => {
-    //     this.setState({
-    //       isPhoniModalOpen: false,
-    //       isMesModalOpen: true,
-    //       name: "",
-    //       number: "",
-    //       mail: "",
-    //       grade: "",
-    //       trialName: result.data.name,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     alert(`There was some problem, please try again later.`);
-    //   });
     event.preventDefault();
     this.setState({
-        trialName: event.target.name.value
-    })
+      trialName: event.target.name.value,
+    });
     db.collection("phonicsHero")
       .add({
         name: event.target.name.value,
@@ -314,7 +241,9 @@ class Home extends React.Component {
         email: event.target.mail.value,
         time: new Date(),
       })
-      .then((result) => this.setState({isPhoniModalOpen: false, isMesModalOpen: true,}))
+      .then((result) =>
+        this.setState({ isPhoniModalOpen: false, isMesModalOpen: true })
+      )
       .catch((err) => alert(err.message));
 
     document.getElementById("phoniForm").reset();
@@ -375,14 +304,6 @@ class Home extends React.Component {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="col-sm-4 col-md-6">
-                    <div className="sosmed-icon pull-right d-inline-flex">
-                    <a href="#" className="fb"><i className="fa fa-facebook" /></a> 
-                    <a href="#" className="tw"><i className="fa fa-twitter" /></a> 
-                    <a href="#" className="ig"><i className="fa fa-instagram" /></a> 
-                    <a href="#" className="in"><i className="fa fa-linkedin" /></a> 
-                    </div>
-                </div> */}
                 </div>
               </div>
             </div>
@@ -394,7 +315,7 @@ class Home extends React.Component {
                     {/* <nav id="navbar-example" className="navbar navbar-expand-lg"style={{"text-align": "center", "padding": "10px"}}> */}
                     <div className="row">
                       <div className="col-lg-12 col-md-12 col-sm-12">
-                        <a href="http://www.enhaancenglish.com/">
+                        <a href="/">
                           <img
                             src={enlogo}
                             alt
@@ -421,48 +342,6 @@ class Home extends React.Component {
                         "Nurturing Tomorrow..."
                       </h4>
                     </div>
-
-                    {/* <a className="navbar-brand" href="index.html" >
-                </a> */}
-                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon" />
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNavDropdown"> */}
-                    {/* <ul className="navbar-nav ml-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link" href="index.html">HOME</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="about.html">ABOUT US</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="classes.html">CLASSES</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="teachers.html">TEACHERS</a>
-                    </li>
-                    <li className="nav-item dropdown dmenu">
-                        <a className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        PAGES
-                        </a>
-                        <div className="dropdown-menu">
-                        <a className="dropdown-item" href="page-gallery.html">GALLERY</a>
-                        <a className="dropdown-item" href="page-testimonials.html">TESTIMONIALS</a>
-                        <a className="dropdown-item" href="page-faq.html">FAQ</a>
-                        <a className="dropdown-item" href="page-404.html">404 PAGE</a>
-                        <a className="dropdown-item" href="page-events.html">EVENTS</a>
-                        <a className="dropdown-item" href="page-events-single.html">SINGLE EVENTS</a>
-                        <a className="dropdown-item" href="page-news.html">NEWS</a>
-                        <a className="dropdown-item" href="page-news-single.html">SINGLE NEWS</a>
-                        </div>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="contact.html">CONTACT US</a>
-                    </li>
-                    </ul> */}
-                    {/* </div> */}
-                    {/* </nav>  */}
-                    {/* */}
                   </div>
                 </div>
               </div>
@@ -1441,344 +1320,209 @@ class Home extends React.Component {
                 </h2>
               </div>
             </div>
-            {/* hare krishna */}
-            {/* <MDBContainer>
-            <MDBRow>
-            <MDBCol md="6">
-                <h2 className="">Book a Free Trial Today!</h2>
-                </MDBCol>
-                <MDBCol md="12">
-                <MDBCard>
-                    <MDBCardBody className="mx-4">
-                    <div className="text-center" >
-                        <h5 className="dark-grey-text mb-5">
-                        <strong><span className="badge bg-danger ms-2">Hurry! Only few slots available for this week</span></strong>
-                        </h5>
-                    </div>
-                    <MDBInput
-                        label="Your name"
-                        group
-                        type="text"
-                        validate
-                        error="wrong"
-                        success="right"
-                        onChange={(event) => this.handleChange(event, 'name')}
-                    />
-                    
-                    <MDBInput
-                        label="Your Mobile No."
-                        group
-                        type="text"
-                        validate
-                        containerClass="mb-0"
-                        onChange={(event) => this.handleChange(event, 'number')}
-                    />
-                    <MDBInput
-                        label="Your Email-id"
-                        group
-                        type="text"
-                        validate
-                        containerClass="mb-0"
-                        onChange={(event) => this.handleChange(event, 'mail')}
-                    />
-                    <MDBInput
-                        label="Your age"
-                        group
-                        type="number"
-                        validate
-                        containerClass="mb-0"
-                        onChange={(event) => this.handleChange(event, 'age')}
-                    />
-                    <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
-
-                Choose Course:
-                </p>
-                    <MDBFormInline>
-                        <MDBInput
-                        onClick={this.handleClick("beginner")}
-                        checked={this.state.radio === "beginner" ? true : false}
-                        label='Beginner'
-                        type='radio'
-                        id='radio1'
-                        containerClass='mr-5'
-                        />
-                        <MDBInput
-                        onClick={this.handleClick("intermediate")}
-                        checked={this.state.radio === "intermediate" ? true : false}
-                        label='Intermediate'
-                        type='radio'
-                        id='radio2'
-                        containerClass='mr-5'
-                        />
-                        <MDBInput
-                        onClick={this.handleClick("professional")}
-                        checked={this.state.radio === "professional" ? true : false}
-                        label='Professional English'
-                        type='radio'
-                        id='radio3'
-                        containerClass='mr-5'
-                        />
-                        <MDBInput
-                        onClick={this.handleClick("nri")}
-                        checked={this.state.radio === "nri" ? true : false}
-                        label='NRI Course'
-                        type='radio'
-                        id='radio4'
-                        containerClass='mr-5'
-                        />
-                    </MDBFormInline>
-                    <br />
-                    <p className="font-small blue-text d-flex justify-content-end pb-3">
-                        Forgot
-                        <a href="#!" className="blue-text ml-1">
-
-                        Password?
-                        </a>
-                    </p>
-                    <div className="text-center mb-3">
-                        <MDBBtn
-                        type="button"
-                        gradient="blue"
-                        rounded
-                        className="btn-block z-depth-1a"
-                        onClick={this.book}
-                        >
-                        Book a Free Trial Class
-                        </MDBBtn>
-                    </div>
-                    <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
-
-                        or Sign in with:
-                    </p>
-                    <div className="row my-3 d-flex justify-content-center">
-                        <MDBBtn
-                        type="button"
-                        color="white"
-                        rounded
-                        className="mr-md-3 z-depth-1a"
-                        >
-                        <MDBIcon fab icon="facebook-f" className="blue-text text-center" />
-                        </MDBBtn>
-                        <MDBBtn
-                        type="button"
-                        color="white"
-                        rounded
-                        className="mr-md-3 z-depth-1a"
-                        >
-                        <MDBIcon fab icon="twitter" className="blue-text" />
-                        </MDBBtn>
-                        <MDBBtn
-                        type="button"
-                        color="white"
-                        rounded
-                        className="z-depth-1a"
-                        >
-                        <MDBIcon fab icon="google-plus-g" className="blue-text" />
-                        </MDBBtn> 
-                    </div>
-                    </MDBCardBody>
-                    <MDBModalFooter className="mx-5 pt-3 mb-1">
-                    <p className="font-small grey-text d-flex justify-content-end">
-                    Not a member?
-                    <a href="#!" className="blue-text ml-1">
-                    
-                    Sign Up
-                    </a>
-                    </p>
-                    </MDBModalFooter>
-                </MDBCard>
-                </MDBCol>
-                
-            </MDBRow>
-            </MDBContainer> */}
-
-            {/* -------------------------------- */}
             <div className="section">
               <div
                 className="content-wrap"
                 style={{ "padding-top": "0px", "padding-botton": "0px" }}
               >
                 <div className="container">
-                  <div className="row">
-                    <div
-                      className="lg:w-full md:w-full bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0"
-                      style={{ "background-color": "rgba(0, 183, 255, 0.2)" }}
-                    >
-                      {/* <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Book </h2> */}
-                      <div className="relative mb-4">
-                        <label
-                          htmlFor="full-name"
-                          className="leading-7 text-sm text-gray-600"
-                        >
-                          Full Name
-                        </label>
-                        <input
-                          type="text"
-                          onChange={(event) => this.handleChange(event, "name")}
-                          id="full-name"
-                          name="full-name"
-                          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500  text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-blue-600"
-                        />
-                      </div>
-                      <div className="relative mb-4">
-                        <label
-                          htmlFor="email"
-                          className="leading-7 text-sm text-gray-600"
-                        >
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          onChange={(event) => this.handleChange(event, "mail")}
-                          id="email"
-                          name="email"
-                          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-blue-600 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        />
-                      </div>
-                      <div className="relative mb-4">
-                        <label
-                          htmlFor="number"
-                          className="leading-7 text-sm text-gray-600"
-                        >
-                          Contact number
-                        </label>
-                        <input
-                          type="text"
-                          onChange={(event) =>
-                            this.handleChange(event, "number")
-                          }
-                          id="number"
-                          name="number"
-                          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-blue-600 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        />
-                      </div>
-                      <div className="relative mb-4">
-                        <label
-                          htmlFor="email"
-                          className="leading-7 text-sm text-gray-600"
-                        >
-                          Age
-                        </label>
-                        <input
-                          type="number"
-                          min="0"
-                          onChange={(event) => this.handleChange(event, "age")}
-                          id="age"
-                          name="age"
-                          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-blue-600 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        />
-                      </div>
-                      <p
-                        className="dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"
-                        style={{
-                          "padding-bottom": "-4px",
-                          "font-size": "20px",
-                        }}
-                      >
-                        Choose Course:
-                      </p>
-                      <br />
+                  <form id="newForm" onSubmit={this.book}>
+                    <div className="row">
                       <div
-                        className="container"
-                        style={{ "padding-bottom": "2rem" }}
+                        className="lg:w-full md:w-full bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0"
+                        style={{ "background-color": "rgba(0, 183, 255, 0.2)" }}
                       >
-                        <div className="row">
-                          <div className="col-lg-3 col-md-3 col-sm-6">
-                            <input
-                              type="radio"
-                              id="beg"
-                              onClick={this.handleClick("beginner")}
-                              checked={
-                                this.state.radio === "beginner" ? true : false
-                              }
-                              name="course"
-                              defaultValue="male"
-                            />
-                            <label htmlFor="beg" style={{ display: "inline" }}>
-                              {" "}
-                              Beginner
-                            </label>
-                          </div>
-                          <div className="col-lg-3 col-md-3 col-sm-6">
-                            <input
-                              type="radio"
-                              onClick={this.handleClick("intermediate")}
-                              checked={
-                                this.state.radio === "intermediate"
-                                  ? true
-                                  : false
-                              }
-                              id="int"
-                              name="course"
-                              defaultValue="female"
-                            />
-                            <label htmlFor="int" style={{ display: "inline" }}>
-                              {" "}
-                              Intermediate
-                            </label>
-                          </div>
-                          <div className="col-lg-3 col-md-3 col-sm-6">
-                            <input
-                              type="radio"
-                              id="nri"
-                              onClick={this.handleClick("nri")}
-                              checked={
-                                this.state.radio === "nri" ? true : false
-                              }
-                              name="course"
-                              defaultValue="other"
-                            />
-                            <label
-                              htmlFor="other"
-                              style={{ display: "inline" }}
-                            >
-                              {" "}
-                              Professional English
-                            </label>
-                          </div>
-                          <div className="col-lg-3 col-md-3 col-sm-6">
-                            <input
-                              type="radio"
-                              id="prof"
-                              onClick={this.handleClick("professional")}
-                              checked={
-                                this.state.radio === "professional"
-                                  ? true
-                                  : false
-                              }
-                              name="course"
-                              defaultValue="other"
-                            />
-                            <label
-                              htmlFor="other"
-                              style={{ display: "inline" }}
-                            >
-                              {" "}
-                              ESL Course
-                            </label>
+                        {/* <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Book </h2> */}
+                        <div className="relative mb-4">
+                          <label
+                            htmlFor="full-name"
+                            className="leading-7 text-sm text-gray-600"
+                          >
+                            Full Name
+                          </label>
+                          <input
+                            type="text"
+                            onChange={(event) =>
+                              this.handleChange(event, "name")
+                            }
+                            id="full-name"
+                            name="name"
+                            required
+                            className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500  text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-blue-600"
+                          />
+                        </div>
+                        <div className="relative mb-4">
+                          <label
+                            htmlFor="email"
+                            className="leading-7 text-sm text-gray-600"
+                          >
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            onChange={(event) =>
+                              this.handleChange(event, "mail")
+                            }
+                            id="email"
+                            name="email"
+                            required
+                            className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-blue-600 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                          />
+                        </div>
+                        <div className="relative mb-4">
+                          <label
+                            htmlFor="number"
+                            className="leading-7 text-sm text-gray-600"
+                          >
+                            Contact number
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            onChange={(event) =>
+                              this.handleChange(event, "number")
+                            }
+                            id="number"
+                            name="number"
+                            className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-blue-600 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                          />
+                        </div>
+                        <div className="relative mb-4">
+                          <label
+                            htmlFor="age"
+                            className="leading-7 text-sm text-gray-600"
+                          >
+                            Age
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            onChange={(event) =>
+                              this.handleChange(event, "age")
+                            }
+                            id="age"
+                            name="age"
+                            className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-blue-600 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                          />
+                        </div>
+                        <p
+                          className="dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"
+                          style={{
+                            "padding-bottom": "-4px",
+                            "font-size": "20px",
+                          }}
+                        >
+                          Choose Course:
+                        </p>
+                        <br />
+                        <div
+                          className="container"
+                          style={{ "padding-bottom": "2rem" }}
+                        >
+                          <div className="row">
+                            <div className="col-lg-3 col-md-3 col-sm-6">
+                              <input
+                                type="radio"
+                                id="beg"
+                                value="Beginner"
+                                name="course"
+                                onClick={this.handleClick("beginner")}
+                                checked={
+                                  this.state.radio === "beginner" ? true : false
+                                }
+                                defaultValue="male"
+                              />
+                              <label
+                                htmlFor="beg"
+                                style={{ display: "inline" }}
+                              >
+                                {" "}
+                                Beginner
+                              </label>
+                            </div>
+                            <div className="col-lg-3 col-md-3 col-sm-6">
+                              <input
+                                type="radio"
+                                value="Intermediate"
+                                name="course"
+                                onClick={this.handleClick("intermediate")}
+                                checked={
+                                  this.state.radio === "intermediate"
+                                    ? true
+                                    : false
+                                }
+                                id="int"
+                                defaultValue="female"
+                              />
+                              <label
+                                htmlFor="int"
+                                style={{ display: "inline" }}
+                              >
+                                {" "}
+                                Intermediate
+                              </label>
+                            </div>
+                            <div className="col-lg-3 col-md-3 col-sm-6">
+                              <input
+                                type="radio"
+                                id="nri"
+                                name="course"
+                                onClick={this.handleClick("professional")}
+                                checked={
+                                  this.state.radio === "professional"
+                                    ? true
+                                    : false
+                                }
+                                value="Professional English"
+                                defaultValue="other"
+                              />
+                              <label
+                                htmlFor="other"
+                                style={{ display: "inline" }}
+                              >
+                                {" "}
+                                Professional English
+                              </label>
+                            </div>
+                            <div className="col-lg-3 col-md-3 col-sm-6">
+                              <input
+                                type="radio"
+                                id="prof"
+                                onClick={this.handleClick("esl")}
+                                checked={
+                                  this.state.radio === "esl" ? true : false
+                                }
+                                value="ESL Course"
+                                defaultValue="other"
+                                name="course"
+                              />
+                              <label
+                                htmlFor="other"
+                                style={{ display: "inline" }}
+                              >
+                                {" "}
+                                ESL Course
+                              </label>
+                            </div>
                           </div>
                         </div>
+                        <button
+                          type="submit"
+                          className="sbutton text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                          // onClick={this.book}
+                        >
+                          Book Free Trial Class
+                        </button>
+                        <p
+                          className="text-xs text-gray-500 mt-3"
+                          style={{ "font-weight": "bold" }}
+                        >
+                          * Hurry! Only few slots left for this month
+                        </p>
+                        {/* <strong><span className="badge bg-danger ms-2">Hurry! Only few slots available for this week</span></strong> */}
                       </div>
-                      <button
-                        disabled={
-                          !this.state.number ||
-                          !this.state.name ||
-                          !this.state.mail
-                        }
-                        className="sbutton text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-                        onClick={this.book}
-                      >
-                        Book Free Trial Class
-                      </button>
-                      <p
-                        className="text-xs text-gray-500 mt-3"
-                        style={{ "font-weight": "bold" }}
-                      >
-                        * Hurry! Only few slots left for this month
-                      </p>
-                      {/* <strong><span className="badge bg-danger ms-2">Hurry! Only few slots available for this week</span></strong> */}
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -1791,7 +1535,7 @@ class Home extends React.Component {
                 <p style={{ "font-size": "23px", color: "white" }}>
                   Hi {trialName}!, Thanks for booking your free trial class with
                   us. We have sent you a confirmation e-mail. Our team will
-                  contact you very soon on your whatsapp and mail soon.
+                  contact you on your whatsapp and mail soon.
                 </p>
                 <br />
                 <button
@@ -1834,36 +1578,6 @@ class Home extends React.Component {
                       id="testimonial"
                       className="owl-carousel owl-theme col-md-12 col-sm-12 col-lg-12"
                     >
-                      {/* <div className="item">
-                        <div className="rs-box-testimony">
-                        <div className="quote-box">
-                            <blockquote>
-                            Teritatis et quasi architecto. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolore mque laudantium, totam rem aperiam
-                            </blockquote>
-                            <div className="media">
-                            <img src={e} alt className="rounded-circle" />
-                            </div>
-                            <p className="quote-name">
-                            Johnathan Doel <span>Businessman</span>
-                            </p>                        
-                        </div>
-                        </div>
-                    </div>
-                    <div className="item">
-                        <div className="rs-box-testimony"> 
-                        <div className="quote-box">
-                            <blockquote>
-                            Teritatis et quasi architecto. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolore mque laudantium, totam rem aperiam
-                            </blockquote>
-                            <div className="media">
-                            <img src={e} alt className="rounded-circle" />
-                            </div>
-                            <p className="quote-name">
-                            Johnathan Doel <span>CEO Buka Kreasi</span>
-                            </p>                        
-                        </div>
-                        </div>
-                    </div> */}
                       <iframe
                         width="100%"
                         height="500px"
@@ -1880,19 +1594,6 @@ class Home extends React.Component {
               </div>
             </div>
           </div>
-          {/* <form>
-        <label>Name:</label>
-                <input type="text" value={name} onChange={(event) => this.handleChange(event, 'name')}></input> 
-                <br/>
-                <label>Whatsapp mobile number:</label>
-                <input type="text" value={number} onChange={(event) => this.handleChange(event, 'number')}></input> 
-                <br/>
-                <label>Age:</label>
-                <input type="number" value={age} onChange={(event) => this.handleChange(event, 'age')}></input> 
-                <br/>
-                <input type="submit" />
-        </form> */}
-
           {/* CTA */}
           <div className="section bg-tertiary">
             <div className="content-wrap py-5">
@@ -1932,7 +1633,7 @@ class Home extends React.Component {
                 <div className="row">
                   <div className="col-sm-12 col-md-6 col-lg-4">
                     <div className="footer-item">
-                      <a href="http://www.enhaancenglish.com/">
+                      <a href="/">
                         <img
                           src={enlogbot}
                           alt="logo bottom"
@@ -1982,20 +1683,6 @@ class Home extends React.Component {
                       </ul>
                     </div>
                   </div>
-                  {/* <div className="col-sm-12 col-md-6 col-lg-3">
-                    <div className="footer-item">
-                    <div className="footer-title">
-                        Useful Links
-                    </div>
-                    <ul className="list">
-                        <li><a href="about.html" title="About us">About us</a></li>
-                        <li><a href="teachers.html" title="Our Teacher">Our Teacher</a></li>
-                        <li><a href="classes.html" title="Our Classes">Our Classes</a></li>
-                        <li><a href="page-events.html" title="Our Events">Our Events</a></li>
-                        <li><a href="contact.html" title="Contact Us">Contact Us</a></li>
-                    </ul>
-                    </div>
-                </div> */}
                   <div className="col-sm-12 col-md-6 col-lg-4">
                     <div className="footer-item">
                       <div className="footer-title">Get in Touch</div>
