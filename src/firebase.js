@@ -2,13 +2,13 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCbH06cKqvxwS2m9_yT2G2u8ITJ9p3GAYw",
-    authDomain: "enhaance-f839b.firebaseapp.com",
-    projectId: "enhaance-f839b",
-    storageBucket: "enhaance-f839b.appspot.com",
-    messagingSenderId: "547333147288",
-    appId: "1:547333147288:web:3cece4f00750781fd09eed",
-    measurementId: "G-6VRK8WMWBC"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
   };
 
 let app;
