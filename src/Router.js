@@ -4,6 +4,7 @@ import Contact from './Components/Contact';
 import Home from './Components/Home';
 import Beginner from './Components/Begcourse';
 import Intcourse from './Components/Intcourse';
+import Workshops from "./Components/Workshops";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
@@ -16,14 +17,15 @@ import './css/vendor/magnific-popup.css';
 
 const Router = () => {
     return (
-        <BrowserRouter>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/contact" component={Contact} />
-            <Route exact path="/curriculum/beginner" component={Beginner} />
-            <Route exact path="/curriculum/intermediate" component={Intcourse} />
-        </BrowserRouter>
-    )
+      <BrowserRouter>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/home" component={Home} />
+        <Route exact path="/contact" component={Contact} />
+        <Route exact path="/curriculum/beginner" component={Beginner} />
+        <Route exact path="/curriculum/intermediate" component={Intcourse} />
+        <Route exact path="/weekly-workshops" component={Workshops} />
+      </BrowserRouter>
+    );
 }
 
 export default Router;

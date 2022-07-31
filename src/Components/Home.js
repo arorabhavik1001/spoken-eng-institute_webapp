@@ -390,9 +390,73 @@ class Home extends React.Component {
             {/* <div className="custom-nav owl-nav" /> */}
           </div>
           {/* SHORTCUT */}
+          <div
+            className="section bgi-repeat"
+            data-background="images/dummy-img-1920x900-3.jpg"
+          >
+            <div
+              className="content-wrap pb-0"
+              style={{ "padding-bottom": "60px" }}
+            >
+              <div className="container">
+                <div className="row align-items-end">
+                  <div className="col-sm-12 col-md-12 col-lg-7">
+                    <p className="supheading">Major Attraction</p>
+                    <h1 className="section-heading" style={{ fontSize: 50 }}>
+                      Free Weekly Competitions
+                    </h1>
+                    <p className="text-black">
+                      Our face-off sunday event is a serious attempt to provide
+                      a national platform to our children to enhaance their
+                      public speaking skill. We are an English training
+                      institute aiming to strengthen communication drills of
+                      children and adults. This event welcomes registration from
+                      all over India.
+                    </p>
+                    <a
+                      className="btn btn-info"
+                      href="/weekly-workshops"
+                      style={{
+                        "border-radius": "10px",
+                        marginBottom: 15,
+                      }}
+                    >
+                      Register now!
+                    </a>
+                    {/* <p className="text-black">
+                      In the search of a successful career people leave their
+                      native country and travel abroad to make their dreams come
+                      true. But due to the lack of fluency &amp; knowledge of
+                      English language it becomes very embarrassing and
+                      difficult to cope up. Enhaance brings such a unique module
+                      which not only helps to improve the english communication
+                      skills but boosts confidence as well.
+                    </p> */}
+                  </div>
+                  <div className="col-sm-12 col-md-12 col-lg-5">
+                    <img
+                      src="https://media.istockphoto.com/photos/little-boy-raising-a-golden-trophy-picture-id485479180?k=20&m=485479180&s=612x612&w=0&h=ZctuHNkFk6qJ0Dnwk1DN7V_FtLXZrreJ5BaePansyUU="
+                      alt
+                      className="img-fluid hoverable"
+                      style={{
+                        "text-align": "center",
+                        "vertical-align": "middle",
+                        "border-radius": "15px",
+                        margin: "0 auto",
+                      }}
+                    />
+                    {/* <img src={k2} alt style={{ "box-shadow": "0px 10px 48px 0px"}} className="img-fluid trainer img-fluid  hoverable" style={{"text-align": "center", "vertical-align": "middle", "border-radius": "15px", "margin":"0 auto"}}/> */}
+                  </div>
+                </div>
+                <div className="spacer-30" />
+                <div className="spacer-30" />
+                <hr className="style18" />
+              </div>
+            </div>
+          </div>
           {/* that new.text will come here */}
           <div className="section">
-            <div className="content-wrap" style={{ "padding-bottom": "60px" }}>
+            <div className="content-wrap">
               <div className="container">
                 <div className="row">
                   <div className="col-sm-12 col-md-12 col-lg-6">
@@ -412,9 +476,7 @@ class Home extends React.Component {
                     className="col-sm-12 col-md-12 col-lg-6"
                     style={{ "padding-left": "40px" }}
                   >
-                    <h2 className="section-heading padhead">
-                      Welcome to Enhaance
-                    </h2>
+                    <h2 className="section-heading padhead">Know About us!</h2>
                     <p style={{ color: "black" }}>
                       Enhaance is a Spoken English, Communication Skills &amp;
                       Personality development Institute. We are committed to
@@ -442,53 +504,7 @@ class Home extends React.Component {
             </div>
           </div>
           {/* WHY CHOOSE US */}
-          <div
-            className="section bgi-repeat"
-            data-background="images/dummy-img-1920x900-3.jpg"
-          >
-            <div
-              className="content-wrap pb-0"
-              style={{ "padding-top": "10px" }}
-            >
-              <div className="container">
-                <div className="row align-items-end">
-                  <div className="col-sm-12 col-md-12 col-lg-7">
-                    <p className="supheading">Major Attraction</p>
-                    <h2 className="section-heading">The ESL Course</h2>
-                    <p className="text-black">
-                      In the search of a successful career people leave their
-                      native country and travel abroad to make their dreams come
-                      true. But due to the lack of fluency &amp; knowledge of
-                      English language it becomes very embarrassing and
-                      difficult to cope up. Enhaance brings such a unique module
-                      which not only helps to improve the english communication
-                      skills but boosts confidence as well.
-                    </p>
-                    {/* <p className="p-check text-black">100% education, for your kids, consectetuer adipiscing elit, sed diam nonummy nibh euismod. Dolor sit amet, dolor gravida placerat liberolorem ipsum dolor consectetur adipiscing elit, sed do eiusmod.</p>
-                    <p className="p-check text-black">More programs activities, sed diam nonummy nibh euismod. Lorem ipsum dolor sit amet.</p>
-                    <p className="p-check text-black">More benefit nonummy nibh euismod. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p> */}
-                  </div>
-                  <div className="col-sm-12 col-md-12 col-lg-5">
-                    <img
-                      src={nri}
-                      alt
-                      className="img-fluid hoverable"
-                      style={{
-                        "text-align": "center",
-                        "vertical-align": "middle",
-                        "border-radius": "15px",
-                        margin: "0 auto",
-                      }}
-                    />
-                    {/* <img src={k2} alt style={{ "box-shadow": "0px 10px 48px 0px"}} className="img-fluid trainer img-fluid  hoverable" style={{"text-align": "center", "vertical-align": "middle", "border-radius": "15px", "margin":"0 auto"}}/> */}
-                  </div>
-                </div>
-                <div className="spacer-30" />
-                <div className="spacer-30" />
-                <hr className="style18" />
-              </div>
-            </div>
-          </div>
+
           {/* OUR ARTICLES */}
           <div className>
             <div className="content-wrap">
@@ -738,11 +754,11 @@ class Home extends React.Component {
                       <img
                         src={k2}
                         alt
-                        style={{ "box-shadow": "0px 10px 48px 0px" }}
                         className="img-fluid trainer img-fluid  hoverable"
                         style={{
                           "text-align": "center",
                           "vertical-align": "middle",
+                          "box-shadow": "0px 10px 48px 0px",
                           "border-radius": "15px",
                           margin: "0 auto",
                         }}
